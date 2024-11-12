@@ -267,6 +267,24 @@ class PaymentManager(DatabaseManager):
         GROUP BY PaymentType;
         """
         self.read(query)
+    
+    def show_previous_payment(self):
+        query = """
+        SELECT PaymentID, PaymentType, PaymentDate, 
+        LAG(PaymentDate, 1) OVER (PARTITION BY PaymentType ORDER BY PaymentDate) AS PreviousPaymentDate
+        FROM Payment;
+        """
+        self.read(query)
+    
+    def show_most_used_payment(self):
+        query = """
+        SELECT PaymentType, COUNT(*) AS MostUsed
+        FROM Payment
+        GROUP BY PaymentType
+        ORDER BY MostUsed DESC
+        LIMIT 3;
+        """
+        self.read(query)
 
 class CustomerAddressManager(DatabaseManager):
     def create_address(self, cid, street_num, street_name, city, state, zip_code):
