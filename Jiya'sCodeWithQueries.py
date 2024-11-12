@@ -1,4 +1,4 @@
-# 13/15 queries added
+# 15/15 queries added
 
 class DatabaseManager:
     def __init__(self,cursor):
