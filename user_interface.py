@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import database_manager
+import database_manager.py
+import use-cases.py
+import fixed_printing
 
 class DatabaseGUI:
     def __init__(self):
@@ -13,7 +15,7 @@ class DatabaseGUI:
         self.crud_options_frame = ttk.Frame(self.root)
         self.data_frame = ttk.Frame(self.root)
         
-        # entires dictionary
+        # entries dictionary
         self.entries = {}
         self.setup_listbox()
         
@@ -33,6 +35,7 @@ class DatabaseGUI:
         self.show_table_selection_frame()
 
     def setup_listbox(self):
+        
         scrollbar = ttk.Scrollbar(self.data_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
@@ -181,6 +184,7 @@ class DatabaseGUI:
     def read_entities(self, table_name):
         try:
             data = getattr(database_manager, f"read_{table_name.lower()}")()
+            self.clear_frames()
             self.data_frame.pack(fill=tk.BOTH, expand=True)
             self.display_data(data, table_name)
             
