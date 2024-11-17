@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import database_manager.py
-import use-cases.py
-import fixed_printing
+from mysql.connector import connect
+from database_manager import *
+
 
 class DatabaseGUI:
     def __init__(self):
