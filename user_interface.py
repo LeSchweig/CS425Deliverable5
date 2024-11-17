@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 curr_user = 'root'
-curr_pass = 'muFf1n!3'
+curr_pass = 'Lenargo&1138'
 curr_host = 'localhost'
 curr_database = 'doordash'
 
@@ -276,8 +276,6 @@ history_manager = HistoryManager(cursor)
 customer_history_restaurant_manager= CustomerHistoryRestaurantManager(cursor)
 customer_address_manager = CustomerAddressManager(cursor)
 restaurant_address_manager = RestaurantAddressManager(cursor)
-
-
 
 
 def create_menu():
@@ -707,11 +705,6 @@ def customerhistory_menu():
             print(f"An unexpected error occurred: {e}")
 
 
-if __name__ == "__main__":
-    create_menu()
-
-
-
 class DatabaseGUI:
     def __init__(self):
         self.root = tk.Tk()
@@ -960,39 +953,41 @@ class DatabaseGUI:
             self.read_entities(table_name)
         except Exception as e:
             messagebox.showerror("Error", str(e))
-
-def delete_entity(self, table_name):
-    if messagebox.askyesno("Confirm Delete", "Are you sure?"):
-        try:
-            record_id = self.get_selected_record_id()
-            
-            if table_name == "Customers":
-                customer_manager.delete_customer(record_id)
-            elif table_name == "Orders":
-                order_manager.delete_order(record_id)
-            elif table_name == "Restaurants":
-                restaurant_manager.delete_restaurant(record_id)
-            elif table_name == "Drivers":
-                driver_manager.delete_driver(record_id)
-            elif table_name == "Payments":
-                payment_manager.delete_payment(record_id)
-            elif table_name == "Customer Address":
-                customer_address_manager.delete_address(record_id)
-            elif table_name == "Restaurant Address":
-                restaurant_address_manager.delete_restaurant_address(record_id)
-            elif table_name == "History":
-                history_manager.delete_history(record_id)
-            elif table_name == "Customer History Restaurant":
-                ids = record_id.split(',')  
-                history_id = ids[0]
-                restaurant_id = ids[1]
-                customer_history_restaurant_manager.delete_customer_history(history_id, restaurant_id)
+    def delete_entity(self, table_name):
+        if messagebox.askyesno("Confirm Delete", "Are you sure?"):
+            try:
+                record_id = self.get_selected_record_id()
                 
-            messagebox.showinfo("Success", "Record deleted")
-            self.read_entities(table_name)
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+                if table_name == "Customers":
+                    customer_manager.delete_customer(record_id)
+                elif table_name == "Orders":
+                    order_manager.delete_order(record_id)
+                elif table_name == "Restaurants":
+                    restaurant_manager.delete_restaurant(record_id)
+                elif table_name == "Drivers":
+                    driver_manager.delete_driver(record_id)
+                elif table_name == "Payments":
+                    payment_manager.delete_payment(record_id)
+                elif table_name == "Customer Address":
+                    customer_address_manager.delete_address(record_id)
+                elif table_name == "Restaurant Address":
+                    restaurant_address_manager.delete_restaurant_address(record_id)
+                elif table_name == "History":
+                    history_manager.delete_history(record_id)
+                elif table_name == "Customer History Restaurant":
+                    ids = record_id.split(',')  
+                    history_id = ids[0]
+                    restaurant_id = ids[1]
+                    customer_history_restaurant_manager.delete_customer_history(history_id, restaurant_id)
+                    
+                messagebox.showinfo("Success", "Record deleted")
+                self.read_entities(table_name)
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
         
     def run(self):
         """Start the application"""
         self.root.mainloop()
+
+current = DatabaseGUI()
+current.run()
