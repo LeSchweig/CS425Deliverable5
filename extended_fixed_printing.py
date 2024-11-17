@@ -200,17 +200,17 @@ class RestaurantManager(DatabaseManager):
         )
         SELECT RName, FType, OTime, CTime, Rating, APrice
         FROM Restaurant, Avg_Rating, Avg_Price
-        WHERE Rating > RatingVal AND APrice > AvgPrice;
+        WHERE Rating > RatingVal AND APrice < AvgPrice;
         """
         self.print_records(query, ['RID', 'RName', 'FType', 'OTime', 'CTime', 'Rating', 'Aprice'])
     def restaurant_rank(self):
         query = """
         SELECT *, 
-        DENSE_RANK() OVER (PARTITION BY FType ORDER BY Rating DESC) AS Ranking
+        DENSE_RANK() OVER (PARTITION BY Aprice ORDER BY Rating DESC) AS Ranking
         FROM Restaurant
         ORDER BY Ranking;
         """
-        self.print_records(query, ['RID', 'RName', 'FType', 'OTime', 'CTime', 'Rating', 'Aprice'])
+        self.print_records(query, ['RID', 'RName', 'FType', 'OTime', 'CTime', 'Rating', 'Aprice', 'Ranking'])
     def show_orders_between(self):
         query = """
         SELECT * 
