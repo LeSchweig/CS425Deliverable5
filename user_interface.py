@@ -1,6 +1,6 @@
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
-
+from tkinter import *
 import database_manager.py
 import use_cases.py
 
