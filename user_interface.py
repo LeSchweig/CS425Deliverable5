@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 curr_user = 'root'
-curr_pass = 'Lenargo&1138'
+curr_pass = 'muFf1n!3'
 curr_host = 'localhost'
 curr_database = 'doordash'
 
@@ -18,7 +18,7 @@ conn = connect(
 if conn.is_connected():
     print("Connection established")
 
-# Cursor object is used to interact with the database
+
 cursor = conn.cursor()
 
 class DatabaseManager:
@@ -277,434 +277,6 @@ customer_history_restaurant_manager= CustomerHistoryRestaurantManager(cursor)
 customer_address_manager = CustomerAddressManager(cursor)
 restaurant_address_manager = RestaurantAddressManager(cursor)
 
-
-def create_menu():
-    while True:
-        print("\nMain Menu:")
-        print("1. Customer Management")
-        print("2. Payment Management")
-        print("3. Order Management")
-        print("4. Resturant Management")
-        print("5. Driver Management")
-        print("6. CustomerAdress Management")
-        print("7. ResturantAdress Management")
-        print("8. History Management")
-        print("9. CustomerHistory Management")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 4:
-                sys.exit() 
-            elif user_choice in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
-                manage_entity(user_choice)
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def manage_entity(choice):
-    if choice == 1:
-        customer_menu()
-    elif choice == 2:
-        payment_menu()
-    elif choice == 3:
-        order_menu()
-    elif choice == 4:
-        restaurant_menu()
-    elif choice == 5:
-        driver_menu()
-    elif choice == 6:
-        customer_address_menu()
-    elif choice == 7:
-        restaurant_address_menu()
-    elif choice == 8:
-        history_menu()
-    elif choice == 9:
-        customerhistory_menu()
-
-def customer_menu():
-    while True:
-        print("\nCustomer Management Menu:")
-        print("1. Read Customers")
-        print("2. Create Customer")
-        print("3. Update Customer")
-        print("4. Delete Customer")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                customers = customer_manager.read_customers()
-                for customer in customers:
-                    print(customer)
-            elif user_choice == 2:
-                name = input("Enter customer name: ")
-                email = input("Enter customer email: ")
-                phone = input("Enter customer phone number: ")
-                subscription = input("Enter subscription type (none/monthly/yearly): ")
-                customer_manager.create_customer(name, email, phone, subscription)
-            elif user_choice == 3:
-                customer_id = int(input("Enter customer ID to update: "))
-                name = input("Enter new customer name: ")
-                email = input("Enter new customer email: ")
-                phone = input("Enter new customer phone number: ")
-                subscription = input("Enter new subscription type (none/monthly/yearly): ")
-                customer_manager.update_customer(customer_id, name, email, phone, subscription)
-            elif user_choice == 4:
-                customer_id = int(input("Enter customer ID to delete: "))
-                customer_manager.delete_customer(customer_id)
-                print("Delete method has been completed.")
-            else:
-                print("The option you selected was not valid.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def payment_menu():
-    while True:
-        print("\nPayment Management Menu:")
-        print("1. Read Payments")
-        print("2. Create Payment")
-        print("3. Update Payment")
-        print("4. Delete Payment")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                payments = payment_manager.read_payments()
-                for payment in payments:
-                    print(payment)
-            elif user_choice == 2:
-                order_id = int(input("Enter order ID: "))
-                amount = float(input("Enter payment amount: "))
-                payment_date = input("Enter payment date (YYYY-MM-DD): ")
-                payment_manager.create_payment(order_id, amount, payment_date)
-            elif user_choice == 3:
-                payment_id = int(input("Enter payment ID to update: "))
-                order_id = int(input("Enter new order ID: "))
-                amount = float(input("Enter new payment amount: "))
-                payment_date = input("Enter new payment date (YYYY-MM-DD): ")
-                payment_manager.update_payment(payment_id, order_id, amount, payment_date)
-            elif user_choice == 4:
-                payment_id = int(input("Enter payment ID to delete: "))
-                payment_manager.delete_payment(payment_id)
-                print("Delete method has been completed.")
-            else:
-                print("The option you selected was not valid.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def order_menu():
-    while True:
-        print("\nOrder Management Menu:")
-        print("1. Read Orders")
-        print("2. Create Order")
-        print("3. Update Order")
-        print("4. Delete Order")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                orders = order_manager.read_orders()
-                for order in orders:
-                    print(order)
-            elif user_choice == 2:
-                cid = int(input("Enter customer ID: "))
-                rid = int(input("Enter restaurant ID: "))
-                order_date = input("Enter order date (YYYY-MM-DD): ")
-                eta = input("Enter estimated time of arrival: ")
-                total_amount = float(input("Enter total amount: "))
-                order_status = input("Enter order status: ")
-                order_manager.create_order(cid, rid, order_date, eta, total_amount, order_status)
-            elif user_choice == 3:
-                order_id = int(input("Enter order ID to update: "))
-                cid = int(input("Enter new customer ID: "))
-                rid = int(input("Enter new restaurant ID: "))
-                order_date = input("Enter new order date (YYYY-MM-DD): ")
-                eta = input("Enter new estimated time of arrival: ")
-                total_amount = float(input("Enter new total amount: "))
-                order_status = input("Enter new order status: ")
-                order_manager.update_order(order_id, cid, rid, order_date, eta, total_amount, order_status)
-            elif user_choice == 4:
-                order_id = int(input("Enter order ID to delete: "))
-                order_manager.delete_order(order_id)
-                print("Delete method has been completed.")
-            else:
-                print("The option you selected was not valid.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def restaurant_menu():
-    while True:
-        print("\nRestaurant Management Menu:")
-        print("1. Read Restaurants")
-        print("2. Create Restaurant")
-        print("3. Update Restaurant")
-        print("4. Delete Restaurant")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                restaurants = restaurant_manager.read_restaurants()
-                for restaurant in restaurants:
-                    print(restaurant)
-            elif user_choice == 2:
-                name = input("Enter restaurant name: ")
-                ftype = input("Enter food type: ")
-                otime = input("Enter opening time: ")
-                ctime = input("Enter closing time: ")
-                rating = float(input("Enter restaurant rating (0-5): "))
-                aprice = float(input("Enter average price: "))
-                restaurant_manager.create_restaurant(name, ftype, otime, ctime, rating, aprice)
-            elif user_choice == 3:
-                rid = int(input("Enter restaurant ID to update: "))
-                name = input("Enter new restaurant name: ")
-                ftype = input("Enter new food type: ")
-                otime = input("Enter new opening time: ")
-                ctime = input("Enter new closing time: ")
-                rating = float(input("Enter new restaurant rating (0-5): "))
-                aprice = float(input("Enter new average price: "))
-                restaurant_manager.update_restaurant(rid, name, ftype, otime, ctime, rating, aprice)
-            elif user_choice == 4:
-                rid = int(input("Enter restaurant ID to delete: "))
-                restaurant_manager.delete_restaurant(rid)
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def driver_menu():
-    while True:
-        print("\nDriver Management Menu:")
-        print("1. Read Drivers")
-        print("2. Create Driver")
-        print("3. Update Driver")
-        print("4. Delete Driver")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                drivers = driver_manager.read_drivers()
-                for driver in drivers:
-                    print(driver)
-            elif user_choice == 2:
-                name = input("Enter driver name: ")
-                phone = input("Enter driver phone number: ")
-                email = input("Enter driver email: ")
-                driver_manager.create_driver(name, phone, email)
-            elif user_choice == 3:
-                driver_id = int(input("Enter driver ID to update: "))
-                name = input("Enter new driver name: ")
-                phone = input("Enter new driver phone number: ")
-                email = input("Enter new driver email: ")
-                driver_manager.update_driver(driver_id, name, phone, email)
-            elif user_choice == 4:
-                driver_id = int(input("Enter driver ID to delete: "))
-                driver_manager.delete_driver(driver_id)
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def customer_address_menu():
-    while True:
-        print("\nCustomer Address Management Menu:")
-        print("1. Read Customer Addresses")
-        print("2. Create Customer Address")
-        print("3. Update Customer Address")
-        print("4. Delete Customer Address")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                addresses = customer_address_manager.read_address()
-                for address in addresses:
-                    print(address)
-            elif user_choice == 2:
-                customer_id = int(input("Enter customer ID: "))
-                street = input("Enter street: ")
-                city = input("Enter city: ")
-                state = input("Enter state: ")
-                zip_code = input("Enter ZIP code: ")
-                customer_address_manager.create_address(customer_id, street, city, state, zip_code)
-            elif user_choice == 3:
-                address_id = int(input("Enter address ID to update: "))
-                customer_id = int(input("Enter new customer ID: "))
-                street = input("Enter new street: ")
-                city = input("Enter new city: ")
-                state = input("Enter new state: ")
-                zip_code = input("Enter new ZIP code: ")
-                customer_address_manager.update_address(address_id, customer_id, street, city, state, zip_code)
-            elif user_choice == 4:
-                address_id = int(input("Enter address ID to delete: "))
-                customer_address_manager.delete_address(address_id)
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def restaurant_address_menu():
-    while True:
-        print("\nRestaurant Address Management Menu:")
-        print("1. Read Restaurant Addresses")
-        print("2. Create Restaurant Address")
-        print("3. Update Restaurant Address")
-        print("4. Delete Restaurant Address")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                addresses = restaurant_address_manager.read_addresses()
-                for address in addresses:
-                    print(address)
-            elif user_choice == 2:
-                restaurant_id = int(input("Enter restaurant ID: "))
-                street = input("Enter street: ")
-                city = input("Enter city: ")
-                state = input("Enter state: ")
-                zip_code = input("Enter ZIP code: ")
-                restaurant_address_manager.create_address(restaurant_id, street, city, state, zip_code)
-                print("Restaurant address created successfully.")
-            elif user_choice == 3:
-                address_id = int(input("Enter address ID to update: "))
-                restaurant_id = int(input("Enter new restaurant ID: "))
-                street = input("Enter new street: ")
-                city = input("Enter new city: ")
-                state = input("Enter new state: ")
-                zip_code = input("Enter new ZIP code: ")
-                restaurant_address_manager.update_address(address_id, restaurant_id, street, city, state, zip_code)
-                print("Restaurant address updated successfully.")
-            elif user_choice == 4:
-                address_id = int(input("Enter address ID to delete: "))
-                restaurant_address_manager.delete_address(address_id)
-                print("Restaurant address deleted successfully.")
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def history_menu():
-    while True:
-        print("\nHistory Management Menu:")
-        print("1. Read History Records")
-        print("2. Create History Record")
-        print("3. Update History Record")
-        print("4. Delete History Record")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                history_records = history_manager.read_history()
-                for record in history_records:
-                    print(record)
-            elif user_choice == 2:
-                cid = int(input("Enter customer ID (CID): "))
-                order_id = int(input("Enter order ID: "))
-                payment_id = int(input("Enter payment ID: "))
-                order_date = input("Enter order date (YYYY-MM-DD): ")
-                history_manager.create_history(cid, order_id, payment_id, order_date)
-                print("History record created successfully.")
-            elif user_choice == 3:
-                history_id = int(input("Enter history ID to update: "))
-                cid = int(input("Enter new customer ID (CID): "))
-                order_id = int(input("Enter new order ID: "))
-                payment_id = int(input("Enter new payment ID: "))
-                order_date = input("Enter new order date (YYYY-MM-DD): ")
-                history_manager.update_history(history_id, cid, order_id, payment_id, order_date)
-                print("History record updated successfully.")
-            elif user_choice == 4:
-                history_id = int(input("Enter history ID to delete: "))
-                history_manager.delete_history(history_id)
-                print("History record deleted successfully.")
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-def customerhistory_menu():
-    while True:
-        print("\nCustomer History Management Menu:")
-        print("1. Read Customer History Records")
-        print("2. Create Customer History Record")
-        print("3. Update Customer History Record")
-        print("4. Delete Customer History Record")
-        print("5. Back to Main Menu")
-
-        try:
-            user_choice = int(input("Please pick a choice: "))
-            if user_choice == 5:
-                break  # Back to Main Menu
-            elif user_choice == 1:
-                customer_history_records = customer_address_manager.read_customer_history()
-                for record in customer_history_records:
-                    print(record)
-            elif user_choice == 2:
-                cid = int(input("Enter customer ID (CID): "))
-                order_id = int(input("Enter order ID: "))
-                payment_id = int(input("Enter payment ID: "))
-                order_date = input("Enter order date (YYYY-MM-DD): ")
-                customer_address_manager.create_customer_history(cid, order_id, payment_id, order_date)
-                print("Customer history record created successfully.")
-            elif user_choice == 3:
-                history_id = int(input("Enter customer history ID to update: "))
-                cid = int(input("Enter new customer ID (CID): "))
-                order_id = int(input("Enter new order ID: "))
-                payment_id = int(input("Enter new payment ID: "))
-                order_date = input("Enter new order date (YYYY-MM-DD): ")
-                customer_address_manager.update_customer_history(history_id, cid, order_id, payment_id, order_date)
-                print("Customer history record updated successfully.")
-            elif user_choice == 4:
-                history_id = int(input("Enter customer history ID to delete: "))
-                customer_address_manager.delete_customer_history(history_id)
-                print("Customer history record deleted successfully.")
-            else:
-                print("Invalid option. Please try again.")
-        except ValueError:
-            print("Input is not valid, please enter a number.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-
 class DatabaseGUI:
     def __init__(self):
         self.root = tk.Tk()
@@ -722,19 +294,42 @@ class DatabaseGUI:
         
         # tables and schemas
         self.tables = {
-            "Customers": ["Customer ID", "Customer Name", "Customer Email", "Customer Phone", "Customer Subscription"],
-            "Orders": ["Customer ID", "Restaurant ID", "Driver ID", "Order Date", "ETA", "Total Amount", "Order Status"],
-            "Restaurants": ["Restaurant Name", "Food Type", "Opening Time", "Closing Time", "Rating", "Average Price"],
-            "Drivers": ["Driver Name", "Phone Number", "Driver Email"],
-            "Payments": ["Payment ID", "Order ID", "Amount", "Payment Date"],
-            "Customer Address": ["Customer ID", "Street Number", "Street Name", "City", "State", "ZIP Code"],
-            "Restaurant Address": ["Restaurant ID", "Street Number", "Street Name", "City", "State", "ZIP Code"],
-            "History": ["History ID", "Customer ID", "Order ID", "Payment ID", "Order Date"],
-            "Customer History Restaurant": ["History ID", "Restaurant ID"]
+            "Customers": ["CID", "CName", "Email", "PhoneNumber", "Subscription"],
+            "Orders": ["OrderID", "CID", "RestaurantID", "DriverID", "OrderDate", "ETA", "TotalAmount", "OrderStatus"],
+            "Restaurants": ["RID", "RName", "FType", "OTime", "CTime", "Rating", "APrice"],
+            "Drivers": ["DID", "DName", "PhoneNumber", "Email"],
+            "Payments": ["PaymentID", "OrderID", "Amount", "PaymentDate"],
+            "Customer Address": ["CID", "StreetNum", "StreetName", "City", "State", "ZipCode"],
+            "Restaurant Address": ["RID", "StreetNum", "StreetName", "City", "State", "ZipCode"],
+            "History": ["HistoryID", "CID", "OrderID", "PaymentID", "OrderDate"],
+            "Customer History Restaurant": ["HistoryID", "RID"]
         }
         
         self.show_table_selection_frame()
-                
+    def get_selected_record_id(self):
+        selection = self.listbox.curselection()
+        if not selection:
+            raise ValueError("Please select a record")
+        
+        
+        if selection[0] <= 1:
+            raise ValueError("Please select a data record, not the header")
+            
+        record = self.listbox.get(selection[0])
+        return record.split()[0]
+    def get_updated_values(self):
+        values = {}
+        for field, entry in self.entries.items():
+            value = entry.get()
+            if value.strip():   
+                values[field] = self.validate_input(field, value)
+        return values
+
+    def display_data(self, data, table_name):
+        self.listbox.delete(0, tk.END)
+        for record in data:
+            self.listbox.insert(tk.END, ' '.join(str(field) for field in record))
+
     def setup_listbox(self):
         
         scrollbar = ttk.Scrollbar(self.data_frame)
@@ -874,28 +469,78 @@ class DatabaseGUI:
             for field, entry in self.entries.items():
                 value = entry.get()
                 values[field] = self.validate_input(field, value)
+
             if table_name == "Customers":
-                customer_manager.create_customer(**values)
+                customer_manager.create_customer(
+                    name=values["Customer Name"],
+                    email=values["Customer Email"],
+                    phone=values["Customer Phone"],
+                    subscription=values["Customer Subscription"]
+                )
             elif table_name == "Orders":
-                order_manager.create_order(**values)
+                order_manager.create_order(
+                    cid=values["Customer ID"],
+                    restaurant_id=values["Restaurant ID"],
+                    driver_id=values["Driver ID"],
+                    order_date=values["Order Date"],
+                    eta=values["ETA"],
+                    total_amount=values["Total Amount"],
+                    order_status=values["Order Status"]
+                )
             elif table_name == "Restaurants":
-                restaurant_manager.create_restaurant(**values)
+                restaurant_manager.create_restaurant(
+                    name=values["Restaurant Name"],
+                    ftype=values["Food Type"],
+                    otime=values["Opening Time"],
+                    ctime=values["Closing Time"],
+                    rating=values["Rating"],
+                    aprice=values["Average Price"]
+                )
             elif table_name == "Drivers":
-                driver_manager.create_driver(**values)
+                driver_manager.create_driver(
+                    name=values["Driver Name"],
+                    phone=values["Phone Number"],
+                    email=values["Driver Email"]
+                )
             elif table_name == "Payments":
-                payment_manager.create_payment(**values)
+                payment_manager.create_payment(
+                    order_id=values["Order ID"],
+                    amount=values["Amount"],
+                    payment_date=values["Payment Date"]
+                )
             elif table_name == "Customer Address":
-                    customer_address_manager.create_address(**values)
+                customer_address_manager.create_address(
+                    cid=values["Customer ID"],
+                    street_num=values["Street Number"],
+                    street_name=values["Street Name"],
+                    city=values["City"],
+                    state=values["State"],
+                    zip_code=values["ZIP Code"]
+                )
             elif table_name == "Restaurant Address":
-                restaurant_address_manager.create_restaurant_address(**values)
+                restaurant_address_manager.create_restaurant_address(
+                    rid=values["Restaurant ID"],
+                    street_num=values["Street Number"],
+                    street_name=values["Street Name"],
+                    city=values["City"],
+                    state=values["State"],
+                    zip_code=values["ZIP Code"]
+                )
             elif table_name == "History":
-                history_manager.create_history(**values)
+                history_manager.create_history(
+                    cid=values["Customer ID"],
+                    order_id=values["Order ID"],
+                    payment_id=values["Payment ID"],
+                    order_date=values["Order Date"]
+                )
             elif table_name == "Customer History Restaurant":
-                customer_history_restaurant_manager.create_customer_history(**values)
+                customer_history_restaurant_manager.create_customer_history(
+                    history_id=values["History ID"],
+                    rid=values["Restaurant ID"]
+                )
 
             messagebox.showinfo("Success", f"Created new {table_name} record")
             self.read_entities(table_name)
-            
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
@@ -928,31 +573,98 @@ class DatabaseGUI:
     def update_entity(self, table_name):
         try:
             record_id = self.get_selected_record_id()
-            values = self.get_updated_values()
+            values = {}
+            for field, entry in self.entries.items():
+                value = entry.get()
+                if value.strip():  # Only include non-empty fields
+                    values[field] = self.validate_input(field, value)
+
             if not values:
                 raise ValueError("No fields to update")
-                
+
             if table_name == "Customers":
-                customer_manager.update_customer(record_id, **values)
+                customer_manager.update_customer(
+                    customer_id=record_id,
+                    name=values.get("Customer Name"),
+                    email=values.get("Customer Email"),
+                    phone=values.get("Customer Phone"),
+                    subscription=values.get("Customer Subscription")
+                )
             elif table_name == "Orders":
-                order_manager.update_order(record_id, **values)
+                order_manager.update_order(
+                    order_id=record_id,
+                    cid=values.get("Customer ID"),
+                    restaurant_id=values.get("Restaurant ID"),
+                    driver_id=values.get("Driver ID"),
+                    order_date=values.get("Order Date"),
+                    eta=values.get("ETA"),
+                    total_amount=values.get("Total Amount"),
+                    order_status=values.get("Order Status")
+                )
             elif table_name == "Restaurants":
-                restaurant_manager.update_restaurant(record_id, **values)
+                restaurant_manager.update_restaurant(
+                    rid=record_id,
+                    name=values.get("Restaurant Name"),
+                    ftype=values.get("Food Type"),
+                    otime=values.get("Opening Time"),
+                    ctime=values.get("Closing Time"),
+                    rating=values.get("Rating"),
+                    aprice=values.get("Average Price")
+                )
             elif table_name == "Drivers":
-                driver_manager.update_driver(record_id, **values)
+                driver_manager.update_driver(
+                    did=record_id,
+                    name=values.get("Driver Name"),
+                    phone=values.get("Phone Number"),
+                    email=values.get("Driver Email")
+                )
             elif table_name == "Payments":
-                payment_manager.update_payment(record_id, **values)
+                payment_manager.update_payment(
+                    payment_id=record_id,
+                    order_id=values.get("Order ID"),
+                    amount=values.get("Amount"),
+                    payment_date=values.get("Payment Date")
+                )
             elif table_name == "Customer Address":
-                customer_address_manager.update_address(record_id, **values)
+                customer_address_manager.update_address(
+                    cid=record_id,
+                    street_num=values.get("Street Number"),
+                    street_name=values.get("Street Name"),
+                    city=values.get("City"),
+                    state=values.get("State"),
+                    zip_code=values.get("ZIP Code")
+                )
             elif table_name == "Restaurant Address":
-                restaurant_address_manager.update_restaurant_address(record_id, **values)
+                restaurant_address_manager.update_restaurant_address(
+                    rid=record_id,
+                    street_num=values.get("Street Number"),
+                    street_name=values.get("Street Name"),
+                    city=values.get("City"),
+                    state=values.get("State"),
+                    zip_code=values.get("ZIP Code")
+                )
             elif table_name == "History":
-                history_manager.update_history(record_id, **values)
-                
+                history_manager.update_history(
+                    history_id=record_id,
+                    cid=values.get("Customer ID"),
+                    order_id=values.get("Order ID"),
+                    payment_id=values.get("Payment ID"),
+                    order_date=values.get("Order Date")
+                )
+
             messagebox.showinfo("Success", "Record updated")
             self.read_entities(table_name)
         except Exception as e:
             messagebox.showerror("Error", str(e))
+    def display_data(self, data, table_name):
+        self.listbox.delete(0, tk.END)
+        headers = self.tables[table_name]
+        self.listbox.insert(tk.END, " ".join(str(header) for header in headers))
+        self.listbox.insert(tk.END, "-" * 80)  
+        
+        for record in data:
+            self.listbox.insert(tk.END, " ".join(str(field) for field in record))
+            
     def delete_entity(self, table_name):
         if messagebox.askyesno("Confirm Delete", "Are you sure?"):
             try:
@@ -984,10 +696,7 @@ class DatabaseGUI:
                 self.read_entities(table_name)
             except Exception as e:
                 messagebox.showerror("Error", str(e))
-        
+            
     def run(self):
         """Start the application"""
         self.root.mainloop()
-
-current = DatabaseGUI()
-current.run()
