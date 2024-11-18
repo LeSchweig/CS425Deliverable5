@@ -182,10 +182,10 @@ class RestaurantManager(DatabaseManager):
         query = "DELETE FROM Restaurant WHERE RID = %s;"
         self.delete(query, (rid,))
     def check_open(self):
-        query = """"
-        SELECT RName, FType, Rating, Distance, APrice
+        query = """
+        SELECT *
         FROM Restaurant
-        WHERE ADDTIME(CURTIME(), '00:30:00') < CTime AND CURTIME() >= OTime;
+        WHERE ADDTIME(CURTIME(), '00:30:00') <= CTime AND CURTIME() >= OTime;
         """
         self.print_records(query, ['RID', 'RName', 'FType', 'OTime', 'CTime', 'Rating', 'Aprice'])
     def higher_rating_and_price(self):
